@@ -23,43 +23,40 @@ class FilteredTodoListState extends Equatable {
 }
 
 // TodoList, TodoSearch, TodoFilter 필요
-class FilteredTodoListProvider with ChangeNotifier {
-  // FilteredTodoListState _state = FilteredTodoListState();
-  final List<TodoModel> initFilteredTodoList;
+class FilteredTodoListProvider {
+  final TodoFilterProvider todoFilter;
+  final TodoSearchProvider todoSearch;
+  final TodoListProvider todoList;
 
-  late FilteredTodoListState _state;
-  FilteredTodoListState get state => _state;
+  FilteredTodoListProvider({
+    required this.todoFilter,
+    required this.todoSearch,
+    required this.todoList,
+  });
 
-  FilteredTodoListProvider({required this.initFilteredTodoList}){
-    _state = FilteredTodoListState(filteredTodoList: initFilteredTodoList);
-  }
-
-  // 의존값이 생성시 호출
-  // 의존값이 변경시 호출
-  void update({
-    required TodoFilterProvider todoFilter,
-    required TodoSearchProvider todoSearch,
-    required TodoListProvider todoList,
-  }) {
+  FilteredTodoListState get state {
     List<TodoModel> _filteredTodoList;
 
-    switch(todoFilter.state.filter){
-      case Filter.active :
-        _filteredTodoList = todoList.state.todoList.where((e) => !e.isDone).toList();
+    switch (todoFilter.state.filter) {
+      case Filter.active:
+        _filteredTodoList =
+            todoList.state.todoList.where((e) => !e.isDone).toList();
         break;
-      case Filter.completed :
-        _filteredTodoList = todoList.state.todoList.where((e) => e.isDone).toList();
+      case Filter.completed:
+        _filteredTodoList =
+            todoList.state.todoList.where((e) => e.isDone).toList();
         break;
-      case Filter.all :
-      default :
+      case Filter.all:
+      default:
         _filteredTodoList = todoList.state.todoList;
     }
 
-    if(todoSearch.state.searchTerm.isNotEmpty) {
-      _filteredTodoList = _filteredTodoList.where((e) => e.content.contains(todoSearch.state.searchTerm)).toList();
+    if (todoSearch.state.searchTerm.isNotEmpty) {
+      _filteredTodoList = _filteredTodoList
+          .where((e) => e.content.contains(todoSearch.state.searchTerm))
+          .toList();
     }
 
-    _state = _state.copyWith(filteredTodoList: _filteredTodoList);
-    notifyListeners();
+    return FilteredTodoListState(filteredTodoList: _filteredTodoList);
   }
 }
