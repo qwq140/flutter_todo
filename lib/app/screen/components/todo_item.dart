@@ -37,7 +37,7 @@ class _TodoItemState extends State<TodoItem> {
             bool error = false;
             controller.text = widget.todo.content;
 
-            // dialog 는 현재 위치에 스코프 된게 아니다. 즉 TodoItem 위젯의 자식이 아니다.
+            // dialog 는 현재 위치에 스코프 된게 아니다.
             return StatefulBuilder(
               builder: (context, setState) {
                 return AlertDialog(

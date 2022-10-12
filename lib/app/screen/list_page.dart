@@ -22,14 +22,14 @@ class _ListPageState extends State<ListPage> {
           body: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             child: Column(
-              children: const [
-                TodoHeader(),
-                CreateTodo(),
-                SizedBox(height: 20,),
+              children: [
+                const TodoHeader(),
+                const CreateTodo(),
+                const SizedBox(height: 20,),
                 SearchWidget(),
-                SizedBox(height: 10,),
-                FilterTab(),
-                ShowTodo(),
+                const SizedBox(height: 10,),
+                const FilterTab(),
+                const ShowTodo(),
               ],
             ),
           ),

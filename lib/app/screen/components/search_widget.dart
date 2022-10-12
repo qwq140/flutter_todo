@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/app/provider/todo_search.dart';
+import 'package:todo/app/utils/debounce.dart';
 
 class SearchWidget extends StatelessWidget {
-  const SearchWidget({Key? key}) : super(key: key);
+  final debounce = Debounce(milliseconds: 1000);
+
+  SearchWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,9 @@ class SearchWidget extends StatelessWidget {
         prefixIcon: Icon(Icons.search),
       ),
       onChanged: (value) {
-        context.read<TodoSearchProvider>().setSearchTerm(value);
+        debounce.run(() {
+          context.read<TodoSearchProvider>().setSearchTerm(value);
+        });
       },
     );
   }
