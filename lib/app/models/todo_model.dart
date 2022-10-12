@@ -8,7 +8,7 @@ enum Filter {
 }
 
 class TodoModel extends Equatable{
-  final String? id;
+  final String id;
   final String content;
   final bool isDone;
 

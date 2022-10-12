@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:todo/app/screen/components/create_todo.dart';
+import 'package:todo/app/screen/components/filter_tab.dart';
+import 'package:todo/app/screen/components/search_widget.dart';
+import 'package:todo/app/screen/components/show_todo.dart';
+import 'package:todo/app/screen/components/todo_header.dart';
 
 class ListPage extends StatefulWidget {
   const ListPage({Key? key}) : super(key: key);
@@ -10,9 +15,25 @@ class ListPage extends StatefulWidget {
 class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('리스트 페이지'),
+    return SafeArea(
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+            child: Column(
+              children: const [
+                TodoHeader(),
+                CreateTodo(),
+                SizedBox(height: 20,),
+                SearchWidget(),
+                SizedBox(height: 10,),
+                FilterTab(),
+                ShowTodo(),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
