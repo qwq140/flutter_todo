@@ -26,6 +26,7 @@ class ShowTodo extends StatelessWidget {
         context.watch<FilteredTodoListProvider>().state.filteredTodoList;
     return ListView.separated(
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return Dismissible(
           key: ValueKey(todoList[index].id),
