@@ -24,9 +24,15 @@ class FilteredTodoListState extends Equatable {
 
 // TodoList, TodoSearch, TodoFilter 필요
 class FilteredTodoListProvider with ChangeNotifier {
-  FilteredTodoListState _state = FilteredTodoListState();
+  // FilteredTodoListState _state = FilteredTodoListState();
+  final List<TodoModel> initFilteredTodoList;
 
+  late FilteredTodoListState _state;
   FilteredTodoListState get state => _state;
+
+  FilteredTodoListProvider({required this.initFilteredTodoList}){
+    _state = FilteredTodoListState(filteredTodoList: initFilteredTodoList);
+  }
 
   // 의존값이 생성시 호출
   // 의존값이 변경시 호출

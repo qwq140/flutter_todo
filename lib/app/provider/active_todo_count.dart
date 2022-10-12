@@ -19,10 +19,16 @@ class ActiveTodoCountState extends Equatable{
 }
 
 class ActiveTodoCountProvider with ChangeNotifier {
-  ActiveTodoCountState _state = ActiveTodoCountState();
+  // ActiveTodoCountState _state = const ActiveTodoCountState();
+  final int initActiveTodoCount;
+
+  late ActiveTodoCountState _state;
   ActiveTodoCountState get state => _state;
 
-  // count 수정
+  ActiveTodoCountProvider({required this.initActiveTodoCount}){
+    _state = ActiveTodoCountState(activeTodoCount: initActiveTodoCount);
+  }
+
   // 의존하는 값 처음 생성시 호출
   // 의존하는 값 변경시 호출
   void update(TodoListProvider todoList) {

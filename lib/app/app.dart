@@ -17,7 +17,7 @@ class TodoApp extends StatelessWidget {
         ChangeNotifierProvider<TodoListProvider>(
             create: (context) => TodoListProvider()),
         ChangeNotifierProxyProvider<TodoListProvider, ActiveTodoCountProvider>(
-          create: (context) => ActiveTodoCountProvider(),
+          create: (context) => ActiveTodoCountProvider(initActiveTodoCount : context.read<TodoListProvider>().state.todoList.length),
           update: (context, TodoListProvider todoList,
               ActiveTodoCountProvider? activeTodoCount) =>
           activeTodoCount!
@@ -26,7 +26,7 @@ class TodoApp extends StatelessWidget {
             TodoSearchProvider,
             TodoListProvider,
             FilteredTodoListProvider>(
-          create: (context) => FilteredTodoListProvider(),
+          create: (context) => FilteredTodoListProvider(initFilteredTodoList: context.read<TodoListProvider>().state.todoList),
           update: (context, TodoFilterProvider todoFilter,
               TodoSearchProvider todoSearch, TodoListProvider todoList,
               FilteredTodoListProvider? filteredTodoList) => filteredTodoList!..update(todoFilter: todoFilter, todoSearch: todoSearch, todoList: todoList),),
