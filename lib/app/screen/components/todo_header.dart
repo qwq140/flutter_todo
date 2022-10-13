@@ -12,7 +12,7 @@ class TodoHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text('TODO', style: TextStyle(fontSize: 40),),
-        Text('${context.watch<ActiveTodoCountProvider>().state.activeTodoCount} items left', style: TextStyle(fontSize: 20, color: Colors.redAccent),),
+        Text('${context.watch<ActiveTodoCountState>().activeTodoCount} items left', style: TextStyle(fontSize: 20, color: Colors.redAccent),),
       ],
     );
   }

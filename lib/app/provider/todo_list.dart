@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:state_notifier/state_notifier.dart';
 import 'package:todo/app/models/todo_model.dart';
 
 class TodoListState extends Equatable{
@@ -20,40 +21,35 @@ class TodoListState extends Equatable{
   TodoListState copyWith({List<TodoModel>? todoList}) => TodoListState(todoList: todoList ?? this.todoList);
 }
 
-class TodoListProvider with ChangeNotifier {
-  TodoListState _state = TodoListState();
-  TodoListState get state => _state;
+class TodoListProvider extends StateNotifier<TodoListState> {
+  TodoListProvider() : super(TodoListState());
 
   // 투두아이템 추가
   void addTodo(String content){
     final newTodo = TodoModel(content: content);
-    final newTodoList = [..._state.todoList, newTodo];
+    final newTodoList = [...state.todoList, newTodo];
 
-    _state = _state.copyWith(todoList: newTodoList);
-    notifyListeners();
+    state = state.copyWith(todoList: newTodoList);
   }
 
   // 투두 내용수정
   void updateContent({required String id, required String content}){
-    final newTodoList = _state.todoList.map((e)=> e.id == id ? TodoModel(id: id, content: content, isDone: e.isDone) : e).toList();
+    final newTodoList = state.todoList.map((e)=> e.id == id ? TodoModel(id: id, content: content, isDone: e.isDone) : e).toList();
 
-    _state = _state.copyWith(todoList: newTodoList);
-    notifyListeners();
+    state = state.copyWith(todoList: newTodoList);
   }
 
   // 할일 체크
   void toggle({required String id}){
-    final newTodoList = _state.todoList.map((e)=> e.id == id ? TodoModel(id: id, content: e.content, isDone: !e.isDone) : e).toList();
+    final newTodoList = state.todoList.map((e)=> e.id == id ? TodoModel(id: id, content: e.content, isDone: !e.isDone) : e).toList();
 
-    _state = _state.copyWith(todoList: newTodoList);
-    notifyListeners();
+    state = state.copyWith(todoList: newTodoList);
   }
 
   // 목록에서 제거
   void remove({required String id}){
-    final newTodoList = _state.todoList.where((e) => e.id != id).toList();
+    final newTodoList = state.todoList.where((e) => e.id != id).toList();
 
-    _state = _state.copyWith(todoList: newTodoList);
-    notifyListeners();
+    state = state.copyWith(todoList: newTodoList);
   }
 }

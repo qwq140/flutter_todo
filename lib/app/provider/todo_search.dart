@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:state_notifier/state_notifier.dart';
 
 class TodoSearchState extends Equatable{
   final String searchTerm;
@@ -7,7 +8,7 @@ class TodoSearchState extends Equatable{
   const TodoSearchState({this.searchTerm = ''});
 
   @override
-  List<Object?> get props => throw [searchTerm];
+  List<Object> get props => [searchTerm];
 
   @override
   bool get stringify => true;
@@ -15,12 +16,10 @@ class TodoSearchState extends Equatable{
   TodoSearchState copyWith({String? searchTerm}) => TodoSearchState(searchTerm: searchTerm ?? this.searchTerm);
 }
 
-class TodoSearchProvider with ChangeNotifier {
-  TodoSearchState _state = const TodoSearchState();
-  TodoSearchState get state => _state;
+class TodoSearchProvider extends StateNotifier<TodoSearchState> {
+  TodoSearchProvider() : super(const TodoSearchState());
 
   void setSearchTerm(String newSearchTerm){
-    _state = _state.copyWith(searchTerm : newSearchTerm);
-    notifyListeners();
+    state = state.copyWith(searchTerm : newSearchTerm);
   }
 }

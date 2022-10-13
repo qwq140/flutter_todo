@@ -26,7 +26,7 @@ class FilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentFilter = context.watch<TodoFilterProvider>().state.filter;
+    final currentFilter = context.watch<TodoFilterState>().filter;
     final textColor = currentFilter == filter ? Colors.blue : Colors.grey;
     return TextButton(
       onPressed: () {

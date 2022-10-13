@@ -23,7 +23,7 @@ class ShowTodo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final todoList =
-        context.watch<FilteredTodoListProvider>().state.filteredTodoList;
+        context.watch<FilteredTodoListState>().filteredTodoList;
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),

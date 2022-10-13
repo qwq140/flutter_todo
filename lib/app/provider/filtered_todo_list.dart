@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:state_notifier/state_notifier.dart';
 import 'package:todo/app/models/todo_model.dart';
 import 'package:todo/app/provider/todo_filter.dart';
 import 'package:todo/app/provider/todo_list.dart';
@@ -23,40 +23,62 @@ class FilteredTodoListState extends Equatable {
 }
 
 // TodoList, TodoSearch, TodoFilter 필요
-class FilteredTodoListProvider {
-  final TodoFilterProvider todoFilter;
-  final TodoSearchProvider todoSearch;
-  final TodoListProvider todoList;
+class FilteredTodoListProvider extends StateNotifier<FilteredTodoListState>
+    with LocatorMixin {
+  FilteredTodoListProvider() : super(FilteredTodoListState());
 
-  FilteredTodoListProvider({
-    required this.todoFilter,
-    required this.todoSearch,
-    required this.todoList,
-  });
+  @override
+  void update(Locator watch) {
+    final Filter filter = watch<TodoFilterState>().filter;
+    final String searchTerm = watch<TodoSearchState>().searchTerm;
+    final List<TodoModel> todoList = watch<TodoListState>().todoList;
 
-  FilteredTodoListState get state {
     List<TodoModel> _filteredTodoList;
 
-    switch (todoFilter.state.filter) {
+    switch (filter) {
       case Filter.active:
-        _filteredTodoList =
-            todoList.state.todoList.where((e) => !e.isDone).toList();
+        _filteredTodoList = todoList.where((e) => !e.isDone).toList();
         break;
       case Filter.completed:
-        _filteredTodoList =
-            todoList.state.todoList.where((e) => e.isDone).toList();
+        _filteredTodoList = todoList.where((e) => e.isDone).toList();
         break;
       case Filter.all:
       default:
-        _filteredTodoList = todoList.state.todoList;
+        _filteredTodoList = todoList;
     }
 
-    if (todoSearch.state.searchTerm.isNotEmpty) {
+    if (searchTerm.isNotEmpty) {
       _filteredTodoList = _filteredTodoList
-          .where((e) => e.content.contains(todoSearch.state.searchTerm))
+          .where((e) => e.content.contains(searchTerm))
           .toList();
     }
-
-    return FilteredTodoListState(filteredTodoList: _filteredTodoList);
+    state = state.copyWith(filteredTodoList: _filteredTodoList);
+    super.update(watch);
   }
+
+// FilteredTodoListState get state {
+//   List<TodoModel> _filteredTodoList;
+//
+//   switch (todoFilter.state.filter) {
+//     case Filter.active:
+//       _filteredTodoList =
+//           todoList.state.todoList.where((e) => !e.isDone).toList();
+//       break;
+//     case Filter.completed:
+//       _filteredTodoList =
+//           todoList.state.todoList.where((e) => e.isDone).toList();
+//       break;
+//     case Filter.all:
+//     default:
+//       _filteredTodoList = todoList.state.todoList;
+//   }
+//
+//   if (todoSearch.state.searchTerm.isNotEmpty) {
+//     _filteredTodoList = _filteredTodoList
+//         .where((e) => e.content.contains(todoSearch.state.searchTerm))
+//         .toList();
+//   }
+//
+//   return FilteredTodoListState(filteredTodoList: _filteredTodoList);
+// }
 }
