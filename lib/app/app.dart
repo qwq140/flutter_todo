@@ -13,7 +13,7 @@ class TodoApp extends StatelessWidget {
       providers: [
         StateNotifierProvider<TodoFilterProvider, TodoFilterState>(create: (context)=> TodoFilterProvider()),
         StateNotifierProvider<TodoSearchProvider, TodoSearchState>(create: (context)=> TodoSearchProvider()),
-        StateNotifierProvider<TodoListProvider, TodoListState>(create: (context)=> TodoListProvider()),
+        StateNotifierProvider<TodoListProvider, TodoListState>(create: (context)=> TodoListProvider()..initTodo()),
         StateNotifierProvider<ActiveTodoCountProvider, ActiveTodoCountState>(create: (context)=> ActiveTodoCountProvider()),
         StateNotifierProvider<FilteredTodoListProvider, FilteredTodoListState>(create: (context)=> FilteredTodoListProvider()),
       ],

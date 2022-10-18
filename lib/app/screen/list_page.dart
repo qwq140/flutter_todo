@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/app/models/todo_model.dart';
+import 'package:todo/app/provider/todo_list.dart';
 import 'package:todo/app/screen/components/create_todo.dart';
 import 'package:todo/app/screen/components/filter_tab.dart';
 import 'package:todo/app/screen/components/search_widget.dart';
@@ -15,6 +18,7 @@ class ListPage extends StatefulWidget {
 class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),

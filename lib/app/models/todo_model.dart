@@ -19,4 +19,15 @@ class TodoModel extends Equatable{
 
   @override
   bool get stringify => true;
+
+  TodoModel.fromMap(Map<String, dynamic> map) : id = map["id"], content = map["content"], isDone = map["isDone"] == 1;
+
+  Map<String, dynamic> toMap(){
+    Map<String, dynamic> map = {
+      "id" : id,
+      "content" : content,
+      "isDone" : isDone ? 1 : 0,
+    };
+    return map;
+  }
 }
